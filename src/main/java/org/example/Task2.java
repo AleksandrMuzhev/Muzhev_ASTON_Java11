@@ -1,20 +1,46 @@
 package org.example;
 
+import java.util.Scanner;
+
 public class Task2 {
     public static void main(String[] args) {
-        String name1 = "Вячеслав";
-        String name2 = "Дмитрий";
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите имя: ");
 
-        if (name1 == "Вячеслав") { // Пример, в случае совпадения имени
-            System.out.println("Привет, " + name1);
-        } else {
-            System.out.println("Нет такого имени");
+        try {
+            String name = scanner.nextLine();
+
+            if (!isValidName(name)) {
+                throw new IllegalArgumentException("Некорректное имя");
+            }
+
+            if ("Вячеслав".equals(name)) {
+                System.out.println("Привет, Вячеслав");
+            } else {
+                System.out.println("Нет такого имени");
+            }
+        } catch (Exception e) {
+            System.out.println("Ошибка ввода. " + e.getMessage());
+        }
+    }
+
+    private static boolean isValidName(String name) {
+        if (name == null) {
+            return false;
         }
 
-        if (name2 == "Вячеслав") { // Пример, в случае не совпадения имени
-            System.out.println("Привет, " + name1);
-        } else {
-            System.out.println("Нет такого имени");
+        if (name.trim().isEmpty()) {
+            return false;
         }
+
+        if (!name.matches("[a-zA-Zа-яА-Я]+")) {
+            return false;
+        }
+
+        if (name.matches(".*\\d+.*")) {
+            return false;
+        }
+
+        return true;
     }
 }
